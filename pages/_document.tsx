@@ -3,6 +3,8 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import type { DocumentContext, DocumentInitialProps } from "next/document";
 import { extractCritical } from "@emotion/server";
 
+import CommonSeo from "@/components/seo/CommonSeo";
+
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps: DocumentInitialProps = await Document.getInitialProps(
@@ -18,7 +20,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <style
             // eslint-disable-next-line
@@ -28,7 +30,10 @@ class MyDocument extends Document {
             // @ts-ignore
             dangerouslySetInnerHTML={{ __html: this.props.css }}
           />
+          {/* COMMONN SEO */}
+          <CommonSeo />
         </Head>
+        {/* <body className="font-sans"> */}
         <body>
           <Main />
           <NextScript />

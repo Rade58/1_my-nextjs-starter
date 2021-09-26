@@ -57,16 +57,17 @@
         "map": [
           // MORALO JE DA STOJI /client
           // JER OCIGLEDNO ESLINT RADI OD ROOT-A PROJECT-A
-          ["@/work", "./client/work/src"],
-          ["@/components", "./client/components"],
-          ["@/types", "./client/types"],
-          ["@/lib", "./client/lib"],
-          ["@/theme", "./client/theme"],
-          ["@/machines", "./client/machines"],
-          ["@/constants", "./client/constants"],
-          ["@/hooks", "./client/hooks"],
-          ["@/utils", "./client/utils"],
-          ["@/svgs", "./client/svgs"]
+          ["@/work", "./work/src"],
+          ["@/components", "./components"],
+          ["@/types", "./types"],
+          ["@/lib", "./lib"],
+          ["@/theme", "./theme"],
+          ["@/machines", "./machines"],
+          ["@/constants", "./constants"],
+          ["@/hooks", "./hooks"],
+          ["@/utils", "./utils"],
+          ["@/svgs", "./svgs"],
+          ["@/styles", "./styles"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".tsx", ".json"]
       }
