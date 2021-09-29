@@ -10,9 +10,9 @@
       "@/machines/*": ["machines/*"],
       "@/constants/*": ["constants/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/utils/*": ["utils/*"],
+      "@/util/*": ["util/*"],
       "@/svgs/*": ["svgs/*"],
-      "@/styles/*": ["svgs/*"]
+      "@/styles/*": ["styles/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

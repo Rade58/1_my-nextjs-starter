@@ -7,21 +7,8 @@ const {
   PHASE_PRODUCTION_SERVER, */
 } = require("next/constants");
 
-// const dotenvLoad = require("dotenv-load");
-
-// const nextEnv = require("next-env");
 const withPlugins = require("next-compose-plugins");
 const withReactSvg = require("next-react-svg");
-
-// const path = require("path");
-
-// ------------------
-
-// dotenvLoad();
-
-// ----------------------------------
-
-// const envPlugin = nextEnv();
 
 // REACT SVG, PLUGIN FOR INLINING .svg FILES
 const svgReactPlugin = withReactSvg({
@@ -39,6 +26,7 @@ module.exports = (phase, { defaultConfig }) => {
   const newConfig = { ...defaultConfig };
 
   newConfig.webpack = (config, options) => {
+    // DON'T NEED THIS
     /* config.module.rules.push({
       test: /\.js$/,
       exclude: /(node_modules)/,
@@ -51,13 +39,14 @@ module.exports = (phase, { defaultConfig }) => {
     return config;
   };
 
+  // DON'T NEED THIS (EBBLED BY DEFAULT)
   // WEBPACK 5 ENABLING
   /* newConfig.future = {
     webpack5: true,
   }; */
 
   // *********************
-  // EVO OVDE CU DA PODESIM TU webpackDevMiddleware FUNKCIJU
+  // DON'T NEED THIS
   /* newConfig.webpackDevMiddleware = (config) => {
     config.watchOptions.poll = 1000;
     config.watchOptions.aggregateTimeout = 300;

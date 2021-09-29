@@ -65,7 +65,7 @@
           ["@/machines", "./machines"],
           ["@/constants", "./constants"],
           ["@/hooks", "./hooks"],
-          ["@/utils", "./utils"],
+          ["@/util", "./util"],
           ["@/svgs", "./svgs"],
           ["@/styles", "./styles"]
         ],

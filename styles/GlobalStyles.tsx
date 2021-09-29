@@ -102,10 +102,24 @@ const customStyles = css`
   /* INJECTING TAILWIND THEME VALUES INTO CSS */
   /* ALSO PARSING OUT TAILWIND CLASSES INTO CSS */
   body {
-    border: green solid 2px;
+    /* border: green solid 2px; */
     --webkit-tap-highlight-color: ${theme`colors.purple.500`};
     ${tw`antialiased`}
   }
+
+  /* TRANSITIONS FOR COLOR MODE */
+
+  /* html.dark * {
+    transition-property: all;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in;
+  }
+
+  html.light * {
+    transition-property: all;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in;
+  } */
 `;
 
 const GlobalStyles = () => (
