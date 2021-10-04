@@ -1,6 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// INITIAL SKAFFOLD (current folder and file) IS GENERATED WITH   `npx prisma init`
+// https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgres
+
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
