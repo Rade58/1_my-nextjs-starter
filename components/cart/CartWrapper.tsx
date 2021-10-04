@@ -4,8 +4,9 @@ import tw, { css, styled, theme } from "twin.macro";
 
 import { useActor } from "@xstate/react";
 import { headerNCartService, EE } from "@/machines/header_n_cart_machine";
+import LayProducts from "./LayProducts";
 
-const CartContent: FC = () => {
+const CartWrapper: FC = () => {
   const [____, dispatchHC] = useActor(headerNCartService);
 
   return (
@@ -50,8 +51,11 @@ const CartContent: FC = () => {
           />
         </svg>
       </button>
+
+      {/* PLACE FOR CART CONTENT */}
+      <LayProducts />
     </section>
   );
 };
 
-export default CartContent;
+export default CartWrapper;

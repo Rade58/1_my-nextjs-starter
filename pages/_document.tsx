@@ -38,7 +38,7 @@ class MyDocument extends Document {
         </Head>
         {/* <body className="font-sans"> */}
         <body
-          tw="dark:bg-d light:bg-l"
+          tw="dark:bg-d light:bg-white"
           css={[
             css`
               transition-property: background;

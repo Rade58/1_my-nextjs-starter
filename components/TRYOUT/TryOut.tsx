@@ -5,7 +5,16 @@ import { FunctionComponent } from "react";
 // import { css } from "@emotion/core";
 import styled from "@emotion/styled";
 
+import { useSession } from "next-auth/client";
+
 const AccesibleSvg: FunctionComponent = () => {
+  const [session, loading] = useSession();
+
+  session?.expires;
+  session?.profile;
+  session?.user;
+  session?.userId;
+
   return (
     <svg
       /* NO NEED FOR px ON width AND height */
