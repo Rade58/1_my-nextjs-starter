@@ -26,6 +26,16 @@ export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
     },
   });
 
+  const topRatedProducts = await prisma.product.findMany({
+    take: 5,
+    select: {
+      name: true,
+      price: true,
+      image: true,
+    },
+    orderBy: {},
+  });
+
   return {
     props: {
       products,

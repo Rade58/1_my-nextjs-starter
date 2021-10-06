@@ -162,11 +162,10 @@ model Product {
   // price         Float
   price         String
   countInStock  Int
-  // AVERAGE OF ALL OF THE REVIEWS RATINGS (JUST YOU KNOW)
-  // THIS IS ALSO BAD TO BE HERE (YOU SHOULD CALCULATE THIS)
-  // REMOVING THIS BECAUSE IT IS A PLACE TO MAKE MISTAKES
-  // WE WILL CALCULATE REATING FROM REVIEWS
-  // rating        Float          @default(0.0)
+  // AVERAGE OF ALL OF THE REVIEWS RATINGS
+  // !!!! IMPORTANT THIS MEANS EVERY TIME YOU MAKE A REVIEW
+  // YOU NEED TO UPDATE PRODUCT
+  averageRating Float          @default(0.0)
   // REVIEW COUNT (DON'T NEED THIS IN HERE (A GOOD PLACE TO MAKE MISTAKES))
   // numReviews    Int            @default(0)
   createdAt     DateTime       @default(now())
@@ -175,12 +174,38 @@ model Product {
   reviews       Review[]
   // OrderElements
   orderElements OrderElement[]
+  // HERE WE WILL HAVE ONLY ONE RECORD (JUST YOU TO KNOW)
+  // averageRating AvarageProductRating[]
 }
 
 // -------------------------------------------------------------
 // -------------------------------------------------------------
+// !!!!!! IGNORE THIS
+// AVERAGE RATING SHOULD HAVE IT'S OWN RECORD
+// IT SHIULD LINK
+// SO EVERY TIME REVIEW IS MADE YOU MAKE A REVIEW
+// THIS IS BECAUSE I DON'T WANT TO CALCULATE AVARAGE RATING
+// IT SHOULD BE CALCULATED ON LEAVING A REVIEW
+// THIS RECORD SHOULD LINK ONE PRODUCT
+// AND ALL HIS REVIEWS
+
+// BECAUSE LATTER ON IT IS GOING TOO BE EASIER TO
+// QUERY ALL PRODUCTS DEPENDING ON HIGHER AVERAGE REVIEW
+// TO MAKE THIS RECORD YOU NEED A REVIEWS FIRST
+// model AvarageProductRating {
+//   id            String  @id @default(cuid())
+//   averageRating Int
+//   product       Product @relation(fields: [productId], references: [id])
+//   productId     String
+
+//   reviews Review[]
+// }
 
 // -------- REVIEW--------------------------------------------
+
+// !!!! IMPORTANT EVERY TIME YOU MAKE A REVIEW YOU NEED TO
+// UPDATE AVERAGErATING ON PRODUCT
+// TODO: BUILD A HELPER
 
 model Review {
   id        String   @id @default(cuid())
@@ -194,6 +219,7 @@ model Review {
   comment   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
 }
 
 // -------------------------------------------------------------

@@ -25,7 +25,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    // "isolatedModules": true,
     "jsx": "preserve",
     "jsxImportSource": "@emotion/react"
   },
