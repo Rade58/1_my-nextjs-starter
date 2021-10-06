@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "d": "yarn postgres:dev && yarn p:push:dev && yarn p:seed:dev && yarn dev",
     "build": "next build && yarn test",
     "test": "jest --watchAll --no-cache",
     "start": "next start",
