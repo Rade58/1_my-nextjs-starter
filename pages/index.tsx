@@ -2,37 +2,41 @@
 /* eslint jsx-a11y/anchor-is-valid: 1 */
 import type { GetServerSideProps, NextPage as NP } from "next";
 
-// import Test from "@/components/1_index_page/Test";
+import prisma from "@/lib/prisma";
 
-interface PropsI {
-  placeholder: boolean;
+export interface PropsI {
+  products: {
+    id: string;
+    name: string;
+    image: string;
+  }[];
 }
 
-type paramsType = {
-  siteId: string;
-};
+export const getServerSideProps: GetServerSideProps<PropsI> = async (ctx) => {
+  // INITIAL PRODUCTS
+  const products = await prisma.product.findMany({
+    take: 16,
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
 
-export const getServerSideProps: GetServerSideProps<PropsI, paramsType> =
-  async (ctx) => {
-    const { params } = ctx;
-
-    console.log(ctx.req.cookies);
-
-    params?.siteId; //
-
-    return {
-      props: {
-        placeholder: true,
-      },
-    };
+  return {
+    props: {
+      products,
+    },
   };
+};
 
 const Page: NP<PropsI> = (props) => {
   //
 
-  console.log(props);
-
-  return <div></div>;
+  return <div>{JSON.stringify(props.products, null, 2)}</div>;
 };
 
 export default Page;

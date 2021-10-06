@@ -1,12 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 // INITIAL SKAFFOLD (current folder and file) IS GENERATED WITH   `npx prisma init`
 // https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgres
-
 
 datasource db {
   provider = "postgresql"
@@ -24,6 +20,11 @@ enum Role {
   USER
   ADMIN
   BANNED
+  // SHOULD HAVE MORE PRIVILAGES THAN ADMIN
+  // HE SHOULD CREATE ADMINS FOR SOME USERS
+  // HE SHOULD HAVE BACKDOR OF THE APP
+  // AND HE DOESN'T NEED ANY NEXT-AUTH STUFF
+  SUPERADMIN
 }
 
 // THIS ONE IS FOR THE STATUS OF ORDER
@@ -115,15 +116,18 @@ model VerificationRequest {
 
 model Profile {
   id                     String    @id @default(cuid())
-  user                   User      @relation(fields: [userId], references: [id])
-  userId                 String
+  // PROFILE SHOULDN'T NECESSARY HAS THE RELATED USER
+  // SUPERADMIN PROFILE SHOULDN'T HAVE ANY USER RECORD
+  // RELATED TO HIM, THAT'S WHY user IS OPTIONAL HERE
+  user                   User?     @relation(fields: [userId], references: [id])
+  userId                 String?
   role                   Role      @default(USER)
   // FOR SHIPPING PURPOSES
-  addrss                 String?
+  streetAddress          String?
   city                   String?
   postalCode             String?
   country                String?
-  paymentMethod          String?
+  // paymentMethod          String?
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @default(now()) @updatedAt
   // --------------
@@ -131,6 +135,8 @@ model Profile {
   reviewsHistory         Review[]
   // FOR ADMIN USER
   productCreationHistory Product[]
+  // THIS IS HELPFUL FOR SUPERADMIN
+  nick                   String?
 }
 
 // -------------------------------------------------------------
@@ -139,19 +145,30 @@ model Profile {
 // -------- PRODUCT---------------------------------------------
 
 model Product {
-  productId     String         @id @default(cuid())
-  admin         Profile        @relation(fields: [adminId], references: [id])
-  adminId       String
+  id            String         @id @default(cuid())
+  // ADMIN (Profile) CREATES PRODUCT
+  // THIS IS OPTIONAL BECAUSE IT IS EASIER FOR DATBASE SEEDING
+  // AND OBVIUSLY WHEN YOU ARE MAKING SHOP YOU DON'T WANT
+  // EMPTY Product TABLE, SOMEONE NEEDS TO LOAD PRODUCTS
+  // WHEN WE ARE PUSHING PROJECT TO DEPLOYMENT
+  admin         Profile?       @relation(fields: [adminId], references: [id])
+  adminId       String?
   name          String
   image         String
   description   String
   brand         String
   category      String?
-  price         Float
+  // THIS SHOULD BE STRING; ALSO WE ARE GOING TO PARSE THIS
+  // price         Float
+  price         String
   countInStock  Int
-  // AVERAGE OF ALL OF THE REVIEW RATING (JUST YOU KNOW)
-  rating        Float          @default(0.0)
-  numReviews    Int            @default(0)
+  // AVERAGE OF ALL OF THE REVIEWS RATINGS (JUST YOU KNOW)
+  // THIS IS ALSO BAD TO BE HERE (YOU SHOULD CALCULATE THIS)
+  // REMOVING THIS BECAUSE IT IS A PLACE TO MAKE MISTAKES
+  // WE WILL CALCULATE REATING FROM REVIEWS
+  // rating        Float          @default(0.0)
+  // REVIEW COUNT (DON'T NEED THIS IN HERE (A GOOD PLACE TO MAKE MISTAKES))
+  // numReviews    Int            @default(0)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   //  Reviews
@@ -167,11 +184,13 @@ model Product {
 
 model Review {
   id        String   @id @default(cuid())
-  product   Product  @relation(fields: [productId], references: [productId])
+  product   Product  @relation(fields: [productId], references: [id])
   productId String
-  rating    Float
-  user      Profile  @relation(fields: [userId], references: [id])
-  userId    String
+  // HERE WE WANT ONLY NUMBERS FROM 1 TO 5
+  rating    Int
+  //
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  profileId String
   comment   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -190,7 +209,7 @@ model Review {
 model OrderElement {
   id        String  @id @default(cuid())
   quantity  Int
-  product   Product @relation(fields: [productId], references: [productId])
+  product   Product @relation(fields: [productId], references: [id])
   productId String
   // ----------------------
   order     Order   @relation(fields: [orderId], references: [id])
@@ -215,16 +234,25 @@ model Order {
   status          OrderStatus    @default(PENDING)
   // WE DON'T NEED THIS BECAUSE WE ALREADY HAVE    deliveredAt    ROW
   // isDelivered     Boolean        @default(false)
-  // THIS IS GOING TO BE IN PERCENTS
-  taxPrice        Float?         @default(0.0)
-  totalPrice      Float?
+  // THIS IS GOING TO BE IN PERCENTS (I GUESS GOOD DEFAULT IS 14.6%)
+  taxPrice        Float?         @default(14.6)
+  // I THINK THIS IS ANTI PATTERN ALSO
+  // TOTAL PRICE SHOULD BE CALCULATED FROM items FIELD
+  // BECAUSE THERE YOU HAVE ALL THE ITEMS AND THEIR COUNTS
+  // AND THEIR PRICES
+  // THIS SHOLUD BE ON PAYMENT RESULT
+  // DON'T WORRY WE ARE NOT GOING TO CALCULATE FRONT END (WE WILL DO THIS ON SERVER SIDE)
+  // totalPrice      Float?
+  // WE CAN PUT DEFAULT HERE ALSO
+  // THIS IS NOT IN PERCENTS (THESE ARE DOLLARS AND I'LL USE STRING
+  // FOR THIS VALUE)
+  shippingPrice   String         @default("5.6")
   paymentMethod   String?
   // PAYPAL RELATED (MYBE ALSO STRIPE OR SOME OTHER PROVIDER (FOR NOW IT IS ONLY PAYPAL
   // SINCE WE ARE NOT PLANING ON USING STRIPE))
   paymentResult   PaymentResult? @relation(fields: [paymentResultId], references: [id])
   //
   paymentResultId String?
-  shippingPrice   Float?         @default(0.0)
   payedAt         DateTime?
   deliveredAt     DateTime?
 }
@@ -248,6 +276,7 @@ model PaymentResult {
   paymentProvider PaymentProvider
   // MAYBE WE WILL CHANGE THIS status FIELD IN THE FUTURE
   // MAYBE THERE ARE SOME STANDARDIZED STATUS VALUES
+  totalPrice      String
   status          String?
   update_time     String?
   email           String?
