@@ -9,7 +9,7 @@ const unsplashTemplate = (name: string) => {
   const arr = name.split(" ");
   const prodName = arr[arr.length - 1];
 
-  return `https://source.unsplash.com/800x600/?${prodName}`;
+  return `https://source.unsplash.com/800x600/?${prodName.toLowerCase()}`;
 };
 
 export const generateProfilesData = (numberOfProfiles: number) => {
@@ -61,6 +61,7 @@ export const generateProductData = (numberOfProducts: number) => {
       id,
       name: productName,
       image: unsplashTemplate(productName),
+      // image: faker.image.fashion(),
       averageRating: Math.round(Math.random() * 5.1) || 1,
       countInStock,
       description: faker.commerce.productDescription(),

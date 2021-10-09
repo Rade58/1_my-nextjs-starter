@@ -7,8 +7,13 @@ import { ThemeProvider as DangerousThemeSettingProvider } from "next-themes";
 import GlobalStyles from "@/styles/GlobalStyles";
 
 import Header from "@/components/Header";
+import PageLoadingIndiccator from "@/components/loaders/PageLoadingIndicator";
+
+import usePageLoadingService from "@/hooks/usePageLoadiingService";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  usePageLoadingService();
+
   return (
     <>
       <Head>
@@ -20,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         enableColorScheme={false}
         enableSystem={false}
       >
+        <PageLoadingIndiccator />
         <Header />
         <Component {...pageProps} />
       </DangerousThemeSettingProvider>

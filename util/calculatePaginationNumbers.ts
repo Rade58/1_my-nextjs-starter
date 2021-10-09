@@ -4,7 +4,7 @@ const calculatePaginationNumbers = (
   currentPageNumber: number
 ) => {
   //
-  const first = 0;
+  const first = currentPageNumber === 0 ? null : 0;
   const last =
     totalNumberOfItems - 1 === currentPageNumber
       ? null

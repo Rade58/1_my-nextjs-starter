@@ -12,7 +12,8 @@
       "@/hooks/*": ["hooks/*"],
       "@/util/*": ["util/*"],
       "@/svgs/*": ["svgs/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/db/*": ["db/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -25,10 +26,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    // "isolatedModules": true,
+    "isolatedModules": true,
     "jsx": "preserve",
-    "jsxImportSource": "@emotion/react",
-    "isolatedModules": true
+    "jsxImportSource": "@emotion/react"
   },
   "files": ["twin.d.ts"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

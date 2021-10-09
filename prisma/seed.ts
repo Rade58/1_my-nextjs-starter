@@ -10,7 +10,9 @@ import {
   // THIS KIND A SHORT HAND IMPORT WONT WORK
   // } from "@/lib/prisma/seed";
   // WE WILL USE THIS
-} from "../lib/prisma/seed";
+} from "../lib/prisma/seed-helpers";
+
+import createReview from "../db/create/review";
 
 const prisma = new PrismaClient();
 
@@ -54,9 +56,28 @@ async function main() {
   });
 
   // SEEDING REVIEWS
-  await prisma.review.createMany({
+  /* await prisma.review.createMany({
     data: reviewsData,
-  });
+  }); */
+
+  for (const {
+    comment,
+    createdAt,
+    id,
+    productId,
+    profileId,
+    rating,
+    updatedAt,
+  } of reviewsData) {
+    await createReview(
+      {
+        comment,
+        rating,
+      },
+      profileId,
+      productId
+    );
+  }
 
   //
 
