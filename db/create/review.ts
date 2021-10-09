@@ -4,7 +4,7 @@
 // DO NOT REFACTOR THIS
 import prisma from "../../lib/prisma";
 //
-import type { Review, Product } from "@prisma/client";
+// import type { Review, Product } from "@prisma/client";
 
 interface ReviewDataI {
   rating: number;

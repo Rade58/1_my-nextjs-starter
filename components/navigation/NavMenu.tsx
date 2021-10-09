@@ -14,6 +14,8 @@ import { EE, headerNCartService } from "@/machines/header_n_cart_machine";
 
 import Switcher from "../color_mode/Switcher";
 
+import SpinnerPageLoading from "../loaders/SpinnerPageLoading";
+
 const Nav: FC = () => {
   const [headerNCartState, dispatchToHeaderNcart] =
     useActor(headerNCartService);
@@ -96,6 +98,7 @@ const Nav: FC = () => {
               </a>
             </Link>
           </div>
+          <SpinnerPageLoading />
 
           {/* <!-- Mobile menu button --> */}
           <div tw="flex md:hidden">
